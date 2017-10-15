@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171012204117) do
+ActiveRecord::Schema.define(version: 20171015172858) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "feature_flags", force: :cascade do |t|
+    t.integer "namespace_flag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.jsonb "environments", default: {"staging"=>false, "production"=>false, "development"=>false, "integration"=>false}, null: false
+    t.index ["namespace_flag_id"], name: "index_feature_flags_on_namespace_flag_id"
+  end
 
   create_table "namespace_flags", force: :cascade do |t|
     t.datetime "created_at", null: false
